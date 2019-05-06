@@ -6,7 +6,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import DashboardLogo from '@/components/DashboardLogo.vue'; // @ is an alias to /src
+import DashboardLogo from '@/components/DashboardLogo.vue';
+import graphQLService from '@/services/graphQL';
 import expressGraphQLService from '@/services/expressGraphQL.ts';
 
 @Component({
@@ -16,9 +17,16 @@ import expressGraphQLService from '@/services/expressGraphQL.ts';
 })
 export default class Home extends Vue {
   public async mounted() {
-    const response = await expressGraphQLService.makeQuery(`{
-      language
-    }`);
+    const response = await graphQLService.makeQuery(`
+      query getArticles {
+        articles {
+          id
+          title
+        }
+      }`);
+    // const response = await expressGraphQLService.makeQuery(`{
+    //   language
+    // }`);
     // tslint:disable-next-line
     console.log(response);
   }

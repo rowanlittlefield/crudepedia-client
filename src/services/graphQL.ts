@@ -1,6 +1,6 @@
 import { api } from '@/services/api';
 
-const SERVICE = '/graphql';
+const SERVICE = '/graphql/';
 
 export default {
   makeQuery(query: string) {
