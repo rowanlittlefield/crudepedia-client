@@ -8,21 +8,18 @@
 import { Component, Vue } from 'vue-property-decorator';
 import DashboardLogo from '@/components/DashboardLogo.vue';
 import graphQLService from '@/services/graphQL';
+// import queries from '@/enums/queries';
+import queries from '@/enums/queries';
 
 @Component({
   components: {
     DashboardLogo,
   },
 })
-export default class Home extends Vue {
+export default class Dashboard extends Vue {
   public async mounted() {
-    const response = await graphQLService.makeQuery(`
-      query getArticles {
-        articles {
-          id
-          title
-        }
-      }`);
+    // const response = await graphQLService.makeQuery(queries.GET_ARTICLES);
+    const response = await graphQLService.makeQuery(queries.GET_ARTICLES);
     // tslint:disable-next-line
     console.log(response);
   }
