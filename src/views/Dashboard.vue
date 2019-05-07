@@ -1,6 +1,14 @@
 <template>
   <div class="home">
     <DashboardLogo msg="Welcome to Your Vue.js + TypeScript App"/>
+    <ul>
+      <li 
+        v-for="article in articleList"
+        :key="article.id"
+      >
+        {{ article }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -16,10 +24,11 @@ import queries from '@/enums/queries';
   },
 })
 export default class Dashboard extends Vue {
+  private articleList = [];
+
   public async mounted() {
     const response = await graphQLService.makeQuery(queries.GET_ARTICLES);
-    // tslint:disable-next-line
-    console.log(response);
+    this.articleList = response.data.data.articles;
   }
 }
 </script>
