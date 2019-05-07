@@ -9,16 +9,4 @@ const api = axios.create({
   },
 });
 
-const expressApi = axios.create({
-  baseURL: process.env.VUE_APP_EXPRESS_API,
-  withCredentials: false,
-  headers: {
-    'Accept': 'application/json',
-    'Content-type': 'application/json',
-  },
-});
-
-export {
-  api,
-  expressApi,
-};
+export default api;

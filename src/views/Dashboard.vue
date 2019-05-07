@@ -8,7 +8,6 @@
 import { Component, Vue } from 'vue-property-decorator';
 import DashboardLogo from '@/components/DashboardLogo.vue';
 import graphQLService from '@/services/graphQL';
-import expressGraphQLService from '@/services/expressGraphQL.ts';
 
 @Component({
   components: {
@@ -24,9 +23,6 @@ export default class Home extends Vue {
           title
         }
       }`);
-    // const response = await expressGraphQLService.makeQuery(`{
-    //   language
-    // }`);
     // tslint:disable-next-line
     console.log(response);
   }
