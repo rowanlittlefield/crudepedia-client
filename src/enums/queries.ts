@@ -4,6 +4,10 @@ enum Query {
       articles {
         id
         title
+        author {
+          id
+          username
+        }
       }
     }` as any,
 }
