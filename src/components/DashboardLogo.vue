@@ -55,7 +55,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
       default: () => ({
         width: 300,
         height: 100,
-      })
+      }),
     },
     gradientOptions: {
       type: Object,
@@ -77,7 +77,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
   },
 })
 export default class DashboardLogo extends Vue {
-  private get colorList():string[] {
+  private get colorList(): string[] {
       const { colors } = this.$props.gradientOptions;
 
       return [
