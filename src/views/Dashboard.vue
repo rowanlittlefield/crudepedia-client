@@ -30,7 +30,7 @@ export default class Dashboard extends Vue {
 
   public async mounted() {
     const query = getArticles();
-    const response = await graphQLService.makeQuery(query);
+    const response = await graphQLService.performOperation(query);
     this.articleList = response.data.data.articles;
   }
 }
