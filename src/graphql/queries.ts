@@ -11,7 +11,7 @@ export const getArticles = (): string => `
     }`;
 
 export const getArticle = (articleId: string): string => `
-    query getArticles {
+    query getArticle {
       article(id: ${articleId}) {
         id
         title
