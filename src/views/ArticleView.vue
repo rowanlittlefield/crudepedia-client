@@ -1,8 +1,13 @@
 <template>
   <div class="article-view">
-    <div>
-    {{ article }}
-    </div>
+    <ul>
+      <li 
+        v-for="key in Object.keys(article)"
+        :key="key"
+      >
+        {{ key }}: {{ article[key] }}
+      </li>
+    </ul>
     <router-link to="/">
       Back to Dashboard
     </router-link>
@@ -12,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import graphQLService from '@/services/graphQL';
-import { getArticle } from '@/graphql/queries';
+import { viewArticle } from '@/graphql/mutations';
 
 @Component({})
 export default class ArticleView extends Vue {
@@ -20,9 +25,13 @@ export default class ArticleView extends Vue {
 
   public async mounted() {
     const { articleId } = this.$route.params;
-    const query = getArticle(articleId);
-    const response = await graphQLService.makeQuery(query);
-    this.article = response.data.data.article;
+    const mutation = viewArticle(articleId);
+    const response = await graphQLService.performOperation(mutation);
+    const { ok, article } = response.data.data.viewArticle;
+
+    if (ok) {
+      this.article = article;
+    }
   }
 }
 </script>
