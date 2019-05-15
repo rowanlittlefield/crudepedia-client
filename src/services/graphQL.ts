@@ -3,9 +3,9 @@ import api from '@/services/api';
 const SERVICE = '/graphql/';
 
 export default {
-  makeQuery(query: string) {
+  performOperation(operation: string) {
     return api.post(SERVICE, {
-      query,
+      query: operation,
     });
   },
 };
