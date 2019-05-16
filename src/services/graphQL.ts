@@ -1,12 +1,11 @@
 import api from '@/services/api';
-import Query from '@/enums/queries';
 
 const SERVICE = '/graphql/';
 
 export default {
-  makeQuery(query: Query) {
+  performOperation(operation: string) {
     return api.post(SERVICE, {
-      query,
+      query: operation,
     });
   },
 };

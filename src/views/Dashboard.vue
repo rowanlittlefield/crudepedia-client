@@ -2,12 +2,14 @@
   <div class="home">
     <DashboardLogo />
     <ul>
-      <li 
-        v-for="article in articleList"
-        :key="article.id"
-      >
-        {{ article }}
-      </li>
+        <router-link
+          v-for="article in articleList"
+          :key="article.id"
+          tag='li'
+          :to="`/article/${article.id}`"
+        >
+        <a>{{ article.title }}</a>
+        </router-link>
     </ul>
   </div>
 </template>
@@ -16,7 +18,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import DashboardLogo from '@/components/DashboardLogo.vue';
 import graphQLService from '@/services/graphQL';
-import queries from '@/enums/queries';
+import { getArticles } from '@/graphql/queries';
 
 @Component({
   components: {
@@ -27,7 +29,8 @@ export default class Dashboard extends Vue {
   private articleList = [];
 
   public async mounted() {
-    const response = await graphQLService.makeQuery(queries.GET_ARTICLES);
+    const query = getArticles();
+    const response = await graphQLService.performOperation(query);
     this.articleList = response.data.data.articles;
   }
 }
