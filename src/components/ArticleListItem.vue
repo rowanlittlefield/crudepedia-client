@@ -4,7 +4,6 @@
       :to="`/article/${article.id}`"
       class="article-list-item__link"
     >
-
       <img 
         :src="imageUrl"
         class="article-list-item__image"
@@ -68,15 +67,15 @@ export default class ArticleListItem extends Vue {
 <style scoped lang="scss">
 .article-list-item {
   display: block;
-  flex-direction: column;
   margin: 0 4px 24px 0;
   width: 210px;
-  &__link {
-    text-decoration: none;
-  }
 
   &:hover {
     cursor: pointer;
+  }
+
+  &__link {
+    text-decoration: none;
   }
 
   &__image {
@@ -105,17 +104,25 @@ export default class ArticleListItem extends Vue {
     }
 
     &-data {
+      // display: flex;
+      // flex-direction: column;
       color: rgb(96, 96, 96);
       font-weight: 400;
       font-size: 13px;
 
-      &-author-link {
-        &:hover {
-          color: rgba(17, 17, 17, 0.8);
+      &-author {
+        line-height: 18px;
+        
+        &-link {
+          &:hover {
+            color: rgba(17, 17, 17, 0.8);
+          }
         }
       }
 
       &-meta {
+        line-height: 18px;
+        
         &-views:after {
           content: "•";
           margin: 0 4px;
