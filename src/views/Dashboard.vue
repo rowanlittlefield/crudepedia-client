@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="dashboard">
     <DashboardLogo />
     <ul>
         <router-link
@@ -11,7 +11,7 @@
         <a>{{ article.title }}</a>
         </router-link>
     </ul>
-    <ul>
+    <ul class="dashboard__article-list">
       <ArticleListItem 
         v-for="article in mockArticleList"
         :key="article.id"
@@ -46,3 +46,12 @@ export default class Dashboard extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.dashboard {
+  &__article-list {
+    display: flex;
+    flex-direction: row;
+  }
+}
+</style>
