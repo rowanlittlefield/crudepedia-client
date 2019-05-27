@@ -3,6 +3,8 @@ export const getArticles = (): string => `
       articles {
         id
         title
+        pubDate
+        views
         author {
           id
           username

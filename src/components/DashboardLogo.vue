@@ -90,11 +90,8 @@ export default class DashboardLogo extends Vue {
 
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-
 .dashboard-logo {
   &__text {
-    font-family: 'Roboto', Arial, sans-serif;
     font-weight: 500;
   }
 }
