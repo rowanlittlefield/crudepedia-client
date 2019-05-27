@@ -2,6 +2,7 @@
   <li class="article-list-item">
     <router-link
       :to="`/article/${article.id}`"
+      class="article-list-item__link"
     >
 
       <img 
@@ -70,7 +71,7 @@ export default class ArticleListItem extends Vue {
   flex-direction: column;
   margin: 0 4px 24px 0;
   width: 210px;
-  &  a {
+  &__link {
     text-decoration: none;
   }
 
