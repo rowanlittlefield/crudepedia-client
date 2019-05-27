@@ -58,7 +58,7 @@ export default class ArticleListItem extends Vue {
   private get imageUrl(): string {
     const { title } = this.article;
     const url = `/assets/${kebabCase(title)}.jpeg`;
-    
+
     return url;
   }
 }
