@@ -1,55 +1,82 @@
 <template>
   <li class="article-list-item">
-    <img 
-      :src="article.imageUrl"
-      class="article-list-item__image"
+    <router-link
+      :to="`/article/${article.id}`"
     >
 
-    <div class="article-list-item__detail">
-      <h3 class="article-list-item__detail-title">
-        <a class="article-list-item__detail-title-link">
-          {{ article.title }}
-        </a>
-      </h3>
+      <img 
+        :src="imageUrl"
+        class="article-list-item__image"
+      >
 
-      <div class="article-list-item__detail-data">
-        <div class="article-list-item__detail-data-author">
-          <a class="article-list-item__detail-data-author-link">
-            {{ article.author.username }}
+      <div class="article-list-item__detail">
+        <h3 class="article-list-item__detail-title">
+          <a class="article-list-item__detail-title-link">
+            {{ article.title }}
           </a>
-        </div>
+        </h3>
 
-        <div class="article-list-item__detail-data-meta">
-          <span class="article-list-item__detail-data-meta-views">
-            {{ article.views }} views 
-          </span>
+        <div class="article-list-item__detail-data">
+          <div class="article-list-item__detail-data-author">
+            <a class="article-list-item__detail-data-author-link">
+              {{ article.author.username }}
+            </a>
+          </div>
 
-          <span class="article-list-item__detail-data-meta-date">
-            {{ article.pubDate | datetimeElapsed }}
-          </span>
+          <div class="article-list-item__detail-data-meta">
+            <span class="article-list-item__detail-data-meta-views">
+              {{ article.views }} views 
+            </span>
+
+            <span class="article-list-item__detail-data-meta-date">
+              {{ article.pubDate | datetimeElapsed }}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </router-link>
   </li>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import kebabCase from 'lodash.kebabcase';
 
 @Component
 export default class ArticleListItem extends Vue {
-  @Prop() private article!: object;
+  @Prop() private article!: {
+    id: string,
+    title: string,
+    pubDate: string,
+    views: number,
+    author: {
+      id: string,
+      username: string,
+    },
+  };
+
+  private get imageUrl(): string {
+    const { title } = this.article;
+    const url = `/assets/${kebabCase(title)}.jpeg`;
+    
+    return url;
+  }
 }
 </script>
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap');
-
 .article-list-item {
   display: block;
   flex-direction: column;
   margin: 0 4px 24px 0;
   width: 210px;
+  &  a {
+    text-decoration: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 
   &__image {
     width: 210px;
