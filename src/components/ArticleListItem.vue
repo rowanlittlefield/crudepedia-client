@@ -108,8 +108,13 @@ export default class ArticleListItem extends Vue {
       font-weight: 400;
       font-size: 13px;
 
-      &-meta {
+      &-author-link {
+        &:hover {
+          color: rgba(17, 17, 17, 0.8);
+        }
+      }
 
+      &-meta {
         &-views:after {
           content: "•";
           margin: 0 4px;
