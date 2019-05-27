@@ -104,8 +104,6 @@ export default class ArticleListItem extends Vue {
     }
 
     &-data {
-      // display: flex;
-      // flex-direction: column;
       color: rgb(96, 96, 96);
       font-weight: 400;
       font-size: 13px;
