@@ -1,4 +1,5 @@
 module.exports = {
+  resetMocks: true,
   moduleFileExtensions: [
     'js',
     'jsx',
@@ -22,7 +23,7 @@ module.exports = {
     'jest-serializer-vue'
   ],
   testMatch: [
-    '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)'
+    '**/*.spec.ts'
   ],
   testURL: 'http://localhost/',
   watchPlugins: [
