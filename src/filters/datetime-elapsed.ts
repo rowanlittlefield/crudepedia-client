@@ -6,5 +6,5 @@ dayjs.extend(relativeTime);
 export default (time: string): string => {
   const isValidTime = time && dayjs(time).isValid();
 
-  return isValidTime ? dayjs(time).fromNow() : '';
+  return isValidTime ? dayjs(time).fromNow() : '-';
 };
