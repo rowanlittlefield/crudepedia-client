@@ -1,0 +1,21 @@
+@function c-color(
+  $name: 'text',
+  $variant: 'primary',
+  $opacity: 1
+) {
+  $color: null;
+
+  $color-spectrum: map-get($colors, $name);
+
+  @if $color-spectrum {
+    $color: map-get($color-spectrum, $variant);
+  }
+
+  $alpha: if(type-of($opacity) == 'number', $opacity, map-get($color-opacity, $opacity));
+
+  @if $alpha {
+    $color: rgba($color, $alpha);
+  }
+
+  @return $color;
+}

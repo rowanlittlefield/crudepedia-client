@@ -1,19 +1,15 @@
+import { articleListItem } from '@/graphql/fragments';
+
 export const viewArticle = (articleId: string): string => `
   mutation viewArticle {
     viewArticle(id: ${articleId}, input: {}) {
       ok
       article {
-        id
-        title
-        pubDate
+        ...articleListItem
         introduction
         description
-        views
-        author {
-          id
-          username
-        }
       }
     }
   }
+  ${articleListItem()}
 `;
