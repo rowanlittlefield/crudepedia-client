@@ -1,6 +1,21 @@
 // Color variables
 $summer-sky: #48c6ef;
 $cornflower-blue: #6f86d6;
-$black: #0A0A0A;
+$black: #000000;
+$light-black: #0A0A0A;
+$lighter-black: #111111;
 $zambezi: #606060;
-$black-2: #111111;
+
+// Map with functional color assignments
+$colors: (
+  'text': (
+    'primary': $light-black,
+    'secondary': $zambezi,
+    'secondary-hover': $lighter-black,
+  )
+);
+
+$color-opacity: (
+  'light': 0.8, // opacity used with lighter colors
+  'dark': 0.4,  // opacity used with darker colors
+);

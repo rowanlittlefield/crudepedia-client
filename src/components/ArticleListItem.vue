@@ -91,7 +91,7 @@ export default class ArticleListItem extends Vue {
       font-size: 14px;
       
       &-link {
-        color: #0A0A0A;
+        color: c-color('text', 'primary');
         font-weight: 500;
         line-height: 16px;
         text-decoration-style: solid;
@@ -104,7 +104,7 @@ export default class ArticleListItem extends Vue {
     }
 
     &-data {
-      color: rgb(96, 96, 96);
+      color: c-color('text', 'secondary');
       font-weight: 400;
       font-size: 13px;
 
@@ -113,7 +113,7 @@ export default class ArticleListItem extends Vue {
         
         &-link {
           &:hover {
-            color: rgba(17, 17, 17, 0.8);
+            color: c-color('text', 'secondary-hover', 0.8);
           }
         }
       }
