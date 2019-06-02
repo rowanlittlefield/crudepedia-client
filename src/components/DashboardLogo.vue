@@ -48,41 +48,32 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-@Component({
-  props: {
-    svg: {
-      type: Object,
-      default: () => ({
-        width: 300,
-        height: 100,
-      }),
-    },
-    gradientOptions: {
-      type: Object,
-      default: () => ({
-        id: 'svgGradientId',
-        colors: [
-          // Gradient Name: Fly High
-          '#48c6ef',
-          '#6f86d6',
-        ],
-      }),
-    },
-    animationOptions: {
-      type: Object,
-      default: () => ({
-        duration: '7s',
-      }),
-    },
-  },
-})
+@Component
 export default class DashboardLogo extends Vue {
+  private svg: Readonly<{ width: number, height: number }> = {
+    width: 300,
+    height: 100,
+  };
+
+  private gradientOptions: Readonly<{ id: string, colors: ReadonlyArray<string>}> = {
+    id: 'svgGradientId',
+    colors: [
+      // Gradient Name: Fly High
+      '#48c6ef',
+      '#6f86d6',
+    ],
+  };
+
+  private animationOptions: Readonly<{ duration: string }> = {
+    duration: '7s',
+  };
+
   private get colorList(): string[] {
-      const { colors } = this.$props.gradientOptions;
+      const colorsDup = this.gradientOptions.colors.slice();
 
       return [
-        ...colors,
-        ...colors.reverse().slice(1),
+        ...colorsDup,
+        ...colorsDup.reverse().slice(1),
       ];
   }
 }
