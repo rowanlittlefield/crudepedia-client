@@ -1,6 +1,6 @@
 import { articleListItem } from '@/graphql/fragments';
 
-export const getArticles = (): string => `
+export const getArticles: Readonly<string> = `
   query getArticles {
     articles {
       ...articleListItem
@@ -9,9 +9,9 @@ export const getArticles = (): string => `
   ${articleListItem()}
 `;
 
-export const getArticle = (articleId: string): string => `
-    query getArticle {
-      article(id: ${articleId}) {
+export const getArticle: Readonly<string> = `
+    query getArticle($id: Int!) {
+      article(id: $id) {
         ...articleListItem
         introduction
         description
