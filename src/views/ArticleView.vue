@@ -25,8 +25,9 @@ export default class ArticleView extends Vue {
 
   public async mounted() {
     const { articleId } = this.$route.params;
-    const mutation = viewArticle(articleId);
-    const response = await graphQLService.performOperation(mutation);
+    const response = await graphQLService.performOperation(viewArticle, {
+      id: articleId,
+    });
     const { ok, article } = response.data.data.viewArticle;
 
     if (ok) {
