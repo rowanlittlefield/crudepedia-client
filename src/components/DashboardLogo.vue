@@ -55,7 +55,7 @@ export default class DashboardLogo extends Vue {
     height: 100,
   };
 
-  private gradientOptions: Readonly<{ id: string, colors: ReadonlyArray<string>}> = {
+  private gradientOptions: Readonly<{ id: string, colors: ReadonlyArray<string> }> = {
     id: 'svgGradientId',
     colors: [
       // Gradient Name: Fly High
