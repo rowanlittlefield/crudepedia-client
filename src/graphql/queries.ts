@@ -6,7 +6,7 @@ export const getArticles: Readonly<string> = `
       ...articleListItem
     }
   }
-  ${articleListItem()}
+  ${articleListItem}
 `;
 
 export const getArticle: Readonly<string> = `
@@ -17,5 +17,5 @@ export const getArticle: Readonly<string> = `
         description
       }
     }
-    ${articleListItem()}
+    ${articleListItem}
   `;
