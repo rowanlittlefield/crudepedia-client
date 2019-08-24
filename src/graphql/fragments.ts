@@ -1,4 +1,4 @@
-export const articleListItem = () => `
+export const articleListItem: Readonly<string> = `
   fragment articleListItem on ArticleType {
     id
     title
