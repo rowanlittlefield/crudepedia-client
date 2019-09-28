@@ -16,7 +16,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import DashboardLogo from '@/components/DashboardLogo.vue';
 import ArticleListItem from '@/components/ArticleListItem.vue';
 import graphQLService from '@/services/graphQL';
-import { getArticles } from '@/graphql/queries';
+import { articles } from '@/graphql/query/article.gql';
 
 @Component({
   components: {
@@ -28,7 +28,7 @@ export default class Dashboard extends Vue {
   private articleList = [];
 
   public async mounted() {
-    const response = await graphQLService.performOperation(getArticles);
+    const response = await graphQLService.performOperation(articles);
     this.articleList = response.data.data.articles;
   }
 }

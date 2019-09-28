@@ -1,0 +1,15 @@
+#import "../fragment/article.gql"
+
+query articles {
+  articles {
+    ...articleListItem
+  }
+}
+
+query article($id: Int!) {
+  article(id: $id) {
+    ...articleListItem
+    introduction
+    description
+  }
+}

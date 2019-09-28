@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import graphQLService from '@/services/graphQL';
-import { viewArticle } from '@/graphql/mutations';
+import { viewArticle } from '@/graphql/mutation/article.gql';
 
 @Component({})
 export default class ArticleView extends Vue {
