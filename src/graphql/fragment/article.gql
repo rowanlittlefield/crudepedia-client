@@ -1,4 +1,4 @@
-fragment articleListItem on ArticleType {
+fragment ArticleListItem on ArticleType {
   id
   title
   pubDate

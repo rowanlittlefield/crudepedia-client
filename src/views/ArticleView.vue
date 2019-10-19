@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import graphQLService from '@/services/graphQL';
-import { viewArticle } from '@/graphql/mutation/article.gql';
+import VIEW_ARTICLE_MUTATION from '@/graphql/mutation/view-article.gql';
 
 @Component({})
 export default class ArticleView extends Vue {
@@ -25,9 +25,11 @@ export default class ArticleView extends Vue {
 
   public async mounted() {
     const { articleId } = this.$route.params;
-    const response = await graphQLService.performOperation(viewArticle, {
+    const variables = {
       id: articleId,
-    });
+    };
+
+    const response = await graphQLService.performOperation(VIEW_ARTICLE_MUTATION, variables);
     const { ok, article } = response.data.data.viewArticle;
 
     if (ok) {
