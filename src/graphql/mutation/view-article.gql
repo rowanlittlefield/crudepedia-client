@@ -1,10 +1,10 @@
 #import "../fragment/article.gql"
   
-mutation viewArticle($id: Int!) {
+mutation VIEW_ARTICLE_MUTATION($id: Int!) {
   viewArticle(id: $id) {
     ok
     article {
-      ...articleListItem
+      ...ArticleListItem
       introduction
       description
     }
