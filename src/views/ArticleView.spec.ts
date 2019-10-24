@@ -16,11 +16,11 @@ describe('ArticleView', () => {
       viewArticle: {
         ok: true,
         article: { id: '1' },
-      }
+      },
     },
   });
-  
-  const createWrapper = () => {    
+
+  const createWrapper = () => {
     const wrapper = shallowMount(ArticleView, {
       localVue,
       mocks: {
@@ -33,7 +33,7 @@ describe('ArticleView', () => {
       stubs: [
         'router-link',
       ],
-    })
+    });
 
     return wrapper;
   };
@@ -62,7 +62,7 @@ describe('ArticleView', () => {
       expect(method).toHaveBeenCalledWith(...args);
     });
 
-    it(`renders the list of article attributes from the 
+    it(`renders the list of article attributes from the
       viewArticle response if viewArticle.ok is true`, async () => {
       mockedPerformOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
@@ -74,7 +74,7 @@ describe('ArticleView', () => {
       expect(actual).toBe(expected);
     });
 
-    it(`does not renders the list of article attributes from the 
+    it(`does not renders the list of article attributes from the
       viewArticle response if viewArticle.ok is false`, async () => {
       mockedPerformOperation.mockResolvedValue({
         data: {
@@ -82,7 +82,7 @@ describe('ArticleView', () => {
             ok: false,
             article: { id: '1' },
           },
-        },        
+        },
       });
       const wrapper = createWrapper();
       const expected = '';
