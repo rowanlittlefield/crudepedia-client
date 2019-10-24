@@ -4,7 +4,7 @@ const files = require.context('./', true, /\.ts$/).keys();
 const filters: Array<{ name: string, filter: () => string }> = [];
 
 files.forEach((path) => {
-  if (path !== './index.ts' && !path.match(/\.spec\/|\.ts/)) {
+  if (path !== './index.ts' && !path.match(/\.spec\.ts/)) {
     const fileName = path.replace(/\.\/|\.ts/g, '');
     const filterModule = require(`@/filters/${fileName}`);
 
