@@ -9,4 +9,12 @@ const api = axios.create({
   },
 });
 
+api.interceptors.response.use((response) => {
+  if (response.data.data && Object.keys(response.data).length === 1) {
+    response.data = response.data.data;
+  }
+
+  return response;
+});
+
 export default api;
