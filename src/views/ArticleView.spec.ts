@@ -74,7 +74,7 @@ describe('ArticleView', () => {
       expect(actual).toBe(expected);
     });
 
-    it(`does not renders the list of article attributes from the
+    it(`does not render the list of article attributes from the
       viewArticle response if viewArticle.ok is false`, async () => {
       graphQLServiceStub.performOperation.mockResolvedValue({
         data: {
