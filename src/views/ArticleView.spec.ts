@@ -6,7 +6,7 @@ import VIEW_ARTICLE_MUTATION from '@/graphql/mutation/view-article.gql';
 
 jest.mock('@/services/graphql');
 
-const mockedPerformOperation = graphQLService.performOperation as jest.Mock<object>;
+const graphQLServiceStub = graphQLService as any;
 
 const localVue = createLocalVue();
 
@@ -40,7 +40,7 @@ describe('ArticleView', () => {
 
   describe('dashboardLink', () => {
     it('sets the to attribute to the correct value', () => {
-      mockedPerformOperation.mockResolvedValue(createResponse());
+      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
       const expected = '/';
 
@@ -51,7 +51,7 @@ describe('ArticleView', () => {
 
   describe('mounted', () => {
     it('calls graphQLService.performOperation with the correct arguments', () => {
-      mockedPerformOperation.mockResolvedValue(createResponse());
+      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
       const args = [
         VIEW_ARTICLE_MUTATION,
@@ -64,7 +64,7 @@ describe('ArticleView', () => {
 
     it(`renders the list of article attributes from the
       viewArticle response if viewArticle.ok is true`, async () => {
-      mockedPerformOperation.mockResolvedValue(createResponse());
+      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
       const expected = 'id: 1';
 
@@ -76,7 +76,7 @@ describe('ArticleView', () => {
 
     it(`does not renders the list of article attributes from the
       viewArticle response if viewArticle.ok is false`, async () => {
-      mockedPerformOperation.mockResolvedValue({
+      graphQLServiceStub.performOperation.mockResolvedValue({
         data: {
           viewArticle: {
             ok: false,
