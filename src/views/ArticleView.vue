@@ -2,18 +2,30 @@
   <div class="article-view">
     <ul data-test="articleAttributeList">
       <li 
-        v-for="(value, key) in article"
+        v-for="key in articlePrimitiveKeys"
         :key="key"
       >
-        {{ key }}: {{ value }}
+        {{ key }}: {{ article[key] }}
       </li>
     </ul>
-    <router-link
-      to="/"
-      data-test="dashboardLink"
-    >
-      Back to Dashboard
-    </router-link>
+
+    <p v-if="article.author">
+      <router-link
+        :to="`/user/${article.author.id}`"
+        data-test="authorLink"
+      >
+        {{ article.author.username }}
+      </router-link>
+    </p>
+
+    <p>
+      <router-link
+        to="/"
+        data-test="dashboardLink"
+      >
+        Back to Dashboard
+      </router-link>
+    </p>
   </div>
 </template>
 
@@ -25,6 +37,10 @@ import VIEW_ARTICLE_MUTATION from '@/graphql/mutation/view-article.gql';
 @Component({})
 export default class ArticleView extends Vue {
   private article = {};
+
+  private get articlePrimitiveKeys() {
+    return Object.keys(this.article).filter((key) => key !== 'author');
+  }
 
   public async mounted() {
     const variables = {
