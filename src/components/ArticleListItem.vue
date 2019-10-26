@@ -18,9 +18,12 @@
 
         <div class="article-list-item__detail-data">
           <div class="article-list-item__detail-data-author">
-            <a class="article-list-item__detail-data-author-link">
+            <router-link 
+              :to="`/user/${article.author.id}`"
+              class="article-list-item__detail-data-author-link"
+            >
               {{ article.author.username }}
-            </a>
+            </router-link>
           </div>
 
           <div class="article-list-item__detail-data-meta">
@@ -112,6 +115,9 @@ export default class ArticleListItem extends Vue {
         line-height: 18px;
         
         &-link {
+          color: c-color('text', 'secondary');
+          text-decoration: none;
+          
           &:hover {
             color: c-color('text', 'secondary-hover', 0.8);
           }
