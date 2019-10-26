@@ -15,7 +15,13 @@ describe('ArticleView', () => {
     data: {
       viewArticle: {
         ok: true,
-        article: { id: '1' },
+        article: {
+          id: '1',
+          author: {
+            id: '1',
+            username: 'Test',
+          },
+        },
       },
     },
   });
@@ -38,8 +44,50 @@ describe('ArticleView', () => {
     return wrapper;
   };
 
+  describe('authorLink', () => {
+    it('does not render authorLink when vm.article.author is falsy', () => {
+      graphQLServiceStub.performOperation.mockResolvedValue({
+        data: {
+          viewArticle: {
+            ok: false,
+            article: {},
+          },
+        },
+      });
+      const wrapper = createWrapper();
+      const expected = false;
+
+      const actual = wrapper.find('[data-test="authorLink"]').exists();
+      expect(actual).toBe(expected);
+    });
+
+    it(`renders authorLink with the correct "to" attribute
+      when vm.article.author is truthy`, async () => {
+      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
+      const wrapper: any = createWrapper();
+
+      await flushPromises();
+
+      const expected = `/user/${wrapper.vm.article.author.id}`;
+      const actual = wrapper.find('[data-test="authorLink"]').attributes('to');
+      expect(actual).toBe(expected);
+    });
+
+    it(`renders authorLink with the correct text
+      when vm.article.author is truthy`, async () => {
+      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
+      const wrapper: any = createWrapper();
+
+      await flushPromises();
+
+      const expected = `${wrapper.vm.article.author.username}`;
+      const actual = wrapper.find('[data-test="authorLink"]').text();
+      expect(actual).toBe(expected);
+    });
+  });
+
   describe('dashboardLink', () => {
-    it('sets the to attribute to the correct value', () => {
+    it('sets the "to" attribute to the correct value', () => {
       graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
       const expected = '/';
@@ -62,7 +110,7 @@ describe('ArticleView', () => {
       expect(method).toHaveBeenCalledWith(...args);
     });
 
-    it(`renders the list of article attributes from the
+    it(`renders a list of all article primitive attributes from the
       viewArticle response if viewArticle.ok is true`, async () => {
       graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
