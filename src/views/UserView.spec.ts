@@ -79,9 +79,9 @@ describe('UserView', () => {
       const response = createResponse();
       graphQLServiceStub.performOperation.mockResolvedValue(response);
       const wrapper = createWrapper();
-      const expected = response.data.user.articleSet.map((article) => ({
-        to: `/article/${article.id}`,
-        text: article.title,
+      const expected = response.data.user.articleSet.map(({ id, title }) => ({
+        to: `/article/${id}`,
+        text: title,
       }));
 
       await flushPromises();
