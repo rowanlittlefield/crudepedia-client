@@ -1,12 +1,12 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import flushPromises from 'flush-promises';
 import UserView from '@/views/UserView.vue';
-import graphQLService from '@/services/graphql';
+import crudepediaService from '@/services/crudepedia';
 import USER_QUERY from '@/graphql/query/user.gql';
 
 jest.mock('@/services/graphql');
 
-const graphQLServiceStub = graphQLService as any;
+const graphQLServiceStub = crudepediaService as any;
 
 const localVue = createLocalVue();
 
@@ -96,7 +96,7 @@ describe('UserView', () => {
   });
 
   describe('mounted', () => {
-    it('calls graphQLService.performOperation with the correct arguments', () => {
+    it('calls crudepediaService.performOperation with the correct arguments', () => {
       graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
       const args = [
@@ -104,7 +104,7 @@ describe('UserView', () => {
         { id: wrapper.vm.$route.params.userId },
       ];
 
-      const method = graphQLService.performOperation;
+      const method = crudepediaService.performOperation;
       expect(method).toHaveBeenCalledWith(...args);
     });
 
