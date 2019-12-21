@@ -1,13 +1,14 @@
 <template>
   <div class="dashboard">
-    <DashboardLogo />
+    <dashboard-logo />
     <ul class="dashboard__article-list">
-      <ArticleListItem 
+      <article-list-item 
         v-for="article in articleList"
         :key="article.id"
         :article="article"
       />
     </ul>
+    <dashboard-article-analytics class="dashboard__article-analytics" />
   </div>
 </template>
 
@@ -15,6 +16,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import DashboardLogo from '@/components/DashboardLogo.vue';
 import ArticleListItem from '@/components/ArticleListItem.vue';
+import DashboardArticleAnalytics from '@/components/DashboardArticleAnalytics.vue';
 import graphQLService from '@/services/graphql';
 import ARTICLES_QUERY from '@/graphql/query/articles.gql';
 
@@ -22,6 +24,7 @@ import ARTICLES_QUERY from '@/graphql/query/articles.gql';
   components: {
     DashboardLogo,
     ArticleListItem,
+    DashboardArticleAnalytics,
   },
 })
 export default class Dashboard extends Vue {
@@ -39,6 +42,12 @@ export default class Dashboard extends Vue {
   &__article-list {
     display: flex;
     flex-direction: row;
+  }
+
+  &__article-analytics {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
