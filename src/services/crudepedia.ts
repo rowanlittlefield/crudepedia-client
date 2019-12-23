@@ -5,9 +5,9 @@ import { ASTNode } from 'graphql/language/ast';
 const SERVICE = '/graphql/';
 
 export default {
-  performOperation(operation: ASTNode, variables = {}) {
+  performOperation(operation: string, variables = {}) {
     return api.post(SERVICE, {
-      query: print(operation),
+      query: operation,
       variables,
     });
   },
