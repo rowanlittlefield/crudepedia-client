@@ -48,11 +48,11 @@ export default class ArticleView extends Vue {
     };
 
     const response = await crudepediaService.performOperation(VIEW_ARTICLE_MUTATION, variables);
-    // const { ok, article } = response.data.viewArticle;
+    const { ok, article } = response.data.viewArticle;
 
-    // if (ok) {
-    //   this.article = article;
-    // }
+    if (ok) {
+      this.article = article;
+    }
   }
 }
 </script>
