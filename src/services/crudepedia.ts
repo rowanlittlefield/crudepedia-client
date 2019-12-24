@@ -1,4 +1,3 @@
-import { print } from 'graphql/language/printer';
 import api from '@/services/api';
 import { DocumentNode } from 'graphql/language/ast';
 

@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import crudepediaService from '@/services/crudepedia';
+import crudepediaService from '../services/crudepedia';
 import USER_QUERY from '@/graphql/query/user.gql';
 
 @Component({})

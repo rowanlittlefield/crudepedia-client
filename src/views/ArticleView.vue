@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import crudepediaService from '@/services/crudepedia';
+import crudepediaService from '../services/crudepedia';
 import VIEW_ARTICLE_MUTATION from '@/graphql/mutation/view-article.gql';
 
 @Component({})

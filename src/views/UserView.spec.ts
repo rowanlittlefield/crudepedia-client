@@ -1,10 +1,10 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import flushPromises from 'flush-promises';
 import UserView from '@/views/UserView.vue';
-import crudepediaService from '@/services/crudepedia';
+import crudepediaService from '@/services/crudepedia.ts';
 import USER_QUERY from '@/graphql/query/user.gql';
 
-jest.mock('@/services/graphql');
+jest.mock('@/services/crudepedia');
 
 const graphQLServiceStub = crudepediaService as any;
 
