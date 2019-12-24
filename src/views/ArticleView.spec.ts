@@ -1,7 +1,7 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import flushPromises from 'flush-promises';
 import ArticleView from '@/views/ArticleView.vue';
-import crudepediaService from '@/services/crudepedia.ts';
+import crudepediaService from '@/services/crudepedia';
 import VIEW_ARTICLE_MUTATION from '@/graphql/mutation/view-article.gql';
 
 jest.mock('@/services/crudepedia');
