@@ -1,17 +1,24 @@
 <template>
   <div class="dashboard">
-    <!-- <dashboard-logo /> -->
-    <dashboard-article-analytics
-      :article-analytics="mostViewedArticles"
-      class="dashboard__article-analytics" 
-    />
-    <ul class="dashboard__article-list">
-      <article-list-item 
-        v-for="article in articles"
-        :key="article.id"
-        :article="article"
-      />
-    </ul>
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <dashboard-logo v-if="showLogo"/>
+      <div v-else>
+        <dashboard-article-analytics
+          :article-analytics="mostViewedArticles"
+          class="dashboard__article-analytics" 
+        />
+        <ul class="dashboard__article-list">
+          <article-list-item 
+            v-for="article in articles"
+            :key="article.id"
+            :article="article"
+          />
+        </ul>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -33,11 +40,14 @@ import DASHBOARD_ARTICLES_QUERY from '@/graphql/query/dashboard-articles.gql';
 export default class Dashboard extends Vue {
   private articles = [];
   private mostViewedArticles = [];
+  private showLogo = !sessionStorage.getItem('hasNavigatedToDashboard');
 
   public async mounted() {
     const response = await graphQLService.performOperation(DASHBOARD_ARTICLES_QUERY);
     this.articles = response.data.articles;
     this.mostViewedArticles = response.data.mostViewed;
+    this.showLogo = false;
+    sessionStorage.setItem('hasNavigatedToDashboard', 'true');
   }
 }
 </script>
@@ -54,5 +64,12 @@ export default class Dashboard extends Vue {
     justify-content: center;
     align-items: center;
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to  {
+  opacity: 0;
 }
 </style>
