@@ -1,7 +1,0 @@
-#import "../fragment/article.gql"
-
-query ARTICLES_QUERY {
-  articles {
-    ...ArticleListItem
-  }
-}
