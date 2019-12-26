@@ -1,14 +1,17 @@
 <template>
   <div class="dashboard">
-    <dashboard-logo />
+    <!-- <dashboard-logo /> -->
+    <dashboard-article-analytics
+      :article-analytics="mostViewedArticles"
+      class="dashboard__article-analytics" 
+    />
     <ul class="dashboard__article-list">
       <article-list-item 
-        v-for="article in articleList"
+        v-for="article in articles"
         :key="article.id"
         :article="article"
       />
     </ul>
-    <dashboard-article-analytics class="dashboard__article-analytics" />
   </div>
 </template>
 
@@ -18,7 +21,7 @@ import DashboardLogo from '@/components/DashboardLogo.vue';
 import ArticleListItem from '@/components/ArticleListItem.vue';
 import DashboardArticleAnalytics from '@/components/DashboardArticleAnalytics.vue';
 import graphQLService from '@/services/graphql';
-import ARTICLES_QUERY from '@/graphql/query/articles.gql';
+import DASHBOARD_ARTICLES_QUERY from '@/graphql/query/dashboard-articles.gql';
 
 @Component({
   components: {
@@ -28,11 +31,13 @@ import ARTICLES_QUERY from '@/graphql/query/articles.gql';
   },
 })
 export default class Dashboard extends Vue {
-  private articleList = [];
+  private articles = [];
+  private mostViewedArticles = [];
 
   public async mounted() {
-    const response = await graphQLService.performOperation(ARTICLES_QUERY);
-    this.articleList = response.data.articles;
+    const response = await graphQLService.performOperation(DASHBOARD_ARTICLES_QUERY);
+    this.articles = response.data.articles;
+    this.mostViewedArticles = response.data.mostViewed;
   }
 }
 </script>

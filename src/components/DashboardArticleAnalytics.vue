@@ -1,19 +1,25 @@
 <template>
-  <svg 
-    :width="svgProps.width"
-    :height="svgProps.height"
-    id="dashboardArticleAnalytics"
-  />
+  <div>
+    <svg 
+      :width="svgProps.width"
+      :height="svgProps.height"
+      id="dashboardArticleAnalyticsSvg"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import * as d3 from 'd3';
-import mostViewedArticles from '@/mock-data/most-viewed-articles';
-import mostYeahArticles from '@/mock-data/most-yeah-articles';
 
 @Component
 export default class DashboardArticleAnalytics extends Vue {
+  @Prop() private articleAnalytics!: [{
+    id: string,
+    title: string,
+    views: number,
+  }];
+
   private svgProps: Readonly<{ width: number, height: number }> = {
     width: 300,
     height: 300,
@@ -26,8 +32,10 @@ export default class DashboardArticleAnalytics extends Vue {
     left: 10,
   };
 
-  private mostViewed: any = mostViewedArticles.data.mostViewedArticles;
-  private mostYeah: any = mostYeahArticles.data.mostYeahArticles;
+  private defaultMostViewed: Readonly<[{ id: number, views: number }]> = [{
+    id: 0,
+    views: 1,
+  }];
 
   private get plotGProps() {
     return {
@@ -36,34 +44,18 @@ export default class DashboardArticleAnalytics extends Vue {
     };
   }
 
-  public mounted() {
-    this.createViz();
+  @Watch('articleAnalytics', { immediate: true })
+  public onArticleAnalyticsChanged(val: []) {
+    const data = val.length ? val : this.defaultMostViewed;
+    this.createViz(data);
   }
 
-  private createViz() {
-    const { mostViewed, mostYeah } = this;
-    const initialData = [
-      {
-        id: 1,
-        views: 1,
-      },
-      {
-        id: 2,
-        views: 0,
-      },
-      {
-        id: 15,
-        views: 0,
-      },
-      {
-        id: 98,
-        views: 0,
-      },
-      {
-        id: 97,
-        views: 0,
-      },
-    ];
+  private async createViz(data: any) {
+    const mostViewed: any = data;
+    const initialData = Object.keys(mostViewed).map((key, idx) => ({
+      ...mostViewed[idx],
+      views: idx ? 0 : 1,
+    }));
 
     const pieChart = d3.pie();
     pieChart.value((d: any) => d.views)
@@ -73,7 +65,7 @@ export default class DashboardArticleAnalytics extends Vue {
     const viewsPie = pieChart(mostViewed);
 
     const nestedData = d3.nest()
-      .key((d: { id: any }): any => d.id)
+      .key((d: any): any => d.id)
       .entries(mostViewed);
 
     nestedData.forEach((d: any, i: number): any => {
@@ -85,17 +77,16 @@ export default class DashboardArticleAnalytics extends Vue {
     newArc.innerRadius(20)
       .outerRadius(100);
 
-    let tenColorScale = d3.scaleOrdinal()
+    const tenColorScale = d3.scaleOrdinal()
        .range(d3.schemePastel2);
 
     const xCenter = (this.svgProps.width - this.margin.left) / 2;
     const yCenter = (this.svgProps.height - this.margin.top) / 2;
 
-    d3.select('svg#dashboardArticleAnalytics')
+    d3.select('svg#dashboardArticleAnalyticsSvg')
       .append('g')
       .attr('transform', `translate(${xCenter},${yCenter})`)
       .selectAll('path')
-      // .data(initialPie)
       .data(nestedData, (d: any): any => d.key)
       .enter()
       .append('path')
