@@ -10,7 +10,14 @@
 
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
-import * as d3 from 'd3';
+import * as originalD3 from 'd3';
+import legend from 'd3-svg-legend';
+
+const d3 = Object.assign(
+  {},
+  originalD3,
+  legend,
+);
 
 @Component
 export default class DashboardArticleAnalytics extends Vue {
@@ -21,7 +28,7 @@ export default class DashboardArticleAnalytics extends Vue {
   }];
 
   private svgProps: Readonly<{ width: number, height: number }> = {
-    width: 300,
+    width: 500,
     height: 300,
   };
 
@@ -32,10 +39,11 @@ export default class DashboardArticleAnalytics extends Vue {
     left: 10,
   };
 
-  private defaultMostViewed: Readonly<[{ id: number, views: number }]> = [{
-    id: 0,
-    views: 1,
-  }];
+  private defaultMostViewed: ReadonlyArray<{ readonly id: number, readonly views: number }> = [
+    { id: 0, views: 1 },
+    { id: 1, views: 0 },
+  ];
+
 
   private get plotGProps() {
     return {
@@ -47,10 +55,10 @@ export default class DashboardArticleAnalytics extends Vue {
   @Watch('articleAnalytics', { immediate: true })
   public onArticleAnalyticsChanged(val: []) {
     const data = val.length ? val : this.defaultMostViewed;
-    this.createViz(data);
+    setTimeout(() => { this.createViz(data); }, 0);
   }
 
-  private async createViz(data: any) {
+  private createViz(data: any) {
     const mostViewed: any = data;
     const initialData = Object.keys(mostViewed).map((key, idx) => ({
       ...mostViewed[idx],
@@ -77,11 +85,11 @@ export default class DashboardArticleAnalytics extends Vue {
     newArc.innerRadius(20)
       .outerRadius(100);
 
-    const tenColorScale = d3.scaleOrdinal()
+    const colorScale = d3.scaleOrdinal()
        .range(d3.schemePastel2);
 
-    const xCenter = (this.svgProps.width - this.margin.left) / 2;
     const yCenter = (this.svgProps.height - this.margin.top) / 2;
+    const xCenter = yCenter;
 
     d3.select('svg#dashboardArticleAnalyticsSvg')
       .append('g')
@@ -91,7 +99,7 @@ export default class DashboardArticleAnalytics extends Vue {
       .enter()
       .append('path')
       .attr('d', (d: any): any => newArc(d.initialSlice))
-      .style('fill', (d: any, i: any): any => tenColorScale(i))
+      .style('fill', (d: any, i: any): any => colorScale(i))
       .style('stroke', 'black')
       .style('stroke-width', '2px');
 
@@ -101,18 +109,25 @@ export default class DashboardArticleAnalytics extends Vue {
         .attrTween('d', arcTween);
 
     function arcTween(d: any) {
-        return (t: any) => {
+      return (t: any) => {
+        const interpolateStartAngle = d3.interpolate(d.initialSlice.startAngle, d.viewsSlice.startAngle);
+        const interpolateEndAngle = d3.interpolate(d.initialSlice.endAngle, d.viewsSlice.endAngle);
+        d.startAngle = interpolateStartAngle(t);
+        d.endAngle = interpolateEndAngle(t);
+        return newArc(d);
+      };
+    }
 
-          const interpolateStartAngle = d3.interpolate(d.initialSlice.startAngle, d.viewsSlice.startAngle);
-          const interpolateEndAngle = d3.interpolate(d.initialSlice.endAngle, d.viewsSlice.endAngle);
-          d.startAngle = interpolateStartAngle(t);
-          d.endAngle = interpolateEndAngle(t);
-          return newArc(d);
-        };
-      }
+    if (mostViewed !== this.defaultMostViewed) {
+      const pieLegend: any = d3.legendColor()
+        .labels(data.map(({ title }: any) => title))
+        .scale(colorScale);
+
+      d3.select('svg#dashboardArticleAnalyticsSvg')
+        .append('g')
+        .attr('transform', `translate(280, ${this.margin.top})`)
+        .call(pieLegend);
+    }
   }
 }
 </script>
-
-<style scoped lang="scss">
-</style>

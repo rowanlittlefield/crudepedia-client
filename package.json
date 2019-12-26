@@ -14,6 +14,7 @@
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "d3": "^5.12.0",
+    "d3-svg-legend": "^2.25.6",
     "dayjs": "^1.8.14",
     "graphql": "^14.5.3",
     "lodash.camelcase": "^4.3.0",
