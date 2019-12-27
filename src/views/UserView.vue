@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import graphQLService from '@/services/graphql';
+import crudepediaService from '../services/crudepedia';
 import USER_QUERY from '@/graphql/query/user.gql';
 
 @Component({})
@@ -57,7 +57,7 @@ export default class UserView extends Vue {
       id: this.$route.params.userId,
     };
 
-    const response = await graphQLService.performOperation(USER_QUERY, variables);
+    const response = await crudepediaService.performOperation(USER_QUERY, variables);
 
     this.user = response.data.user;
   }

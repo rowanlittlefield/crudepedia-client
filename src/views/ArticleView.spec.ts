@@ -1,12 +1,12 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import flushPromises from 'flush-promises';
 import ArticleView from '@/views/ArticleView.vue';
-import graphQLService from '@/services/graphql';
+import crudepediaService from '@/services/crudepedia';
 import VIEW_ARTICLE_MUTATION from '@/graphql/mutation/view-article.gql';
 
-jest.mock('@/services/graphql');
+jest.mock('@/services/crudepedia');
 
-const graphQLServiceStub = graphQLService as any;
+const crudepediaServiceStub = crudepediaService as any;
 
 const localVue = createLocalVue();
 
@@ -46,7 +46,7 @@ describe('ArticleView', () => {
 
   describe('authorLink', () => {
     it('does not render authorLink when vm.article.author is falsy', () => {
-      graphQLServiceStub.performOperation.mockResolvedValue({
+      crudepediaServiceStub.performOperation.mockResolvedValue({
         data: {
           viewArticle: {
             ok: false,
@@ -63,7 +63,7 @@ describe('ArticleView', () => {
 
     it(`renders authorLink with the correct "to" attribute
       when vm.article.author is truthy`, async () => {
-      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
+      crudepediaServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper: any = createWrapper();
 
       await flushPromises();
@@ -75,7 +75,7 @@ describe('ArticleView', () => {
 
     it(`renders authorLink with the correct text
       when vm.article.author is truthy`, async () => {
-      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
+      crudepediaServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper: any = createWrapper();
 
       await flushPromises();
@@ -88,7 +88,7 @@ describe('ArticleView', () => {
 
   describe('dashboardLink', () => {
     it('sets the "to" attribute to the correct value', () => {
-      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
+      crudepediaServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
       const expected = '/';
 
@@ -98,21 +98,21 @@ describe('ArticleView', () => {
   });
 
   describe('mounted', () => {
-    it('calls graphQLService.performOperation with the correct arguments', () => {
-      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
+    it('calls crudepediaService.performOperation with the correct arguments', () => {
+      crudepediaServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
       const args = [
         VIEW_ARTICLE_MUTATION,
         { id: wrapper.vm.$route.params.articleId },
       ];
 
-      const method = graphQLService.performOperation;
+      const method = crudepediaService.performOperation;
       expect(method).toHaveBeenCalledWith(...args);
     });
 
     it(`renders a list of all article primitive attributes from the
       viewArticle response if viewArticle.ok is true`, async () => {
-      graphQLServiceStub.performOperation.mockResolvedValue(createResponse());
+      crudepediaServiceStub.performOperation.mockResolvedValue(createResponse());
       const wrapper = createWrapper();
       const expected = 'id: 1';
 
@@ -120,11 +120,11 @@ describe('ArticleView', () => {
 
       const actual = wrapper.find('[data-test="articleAttributeList"]').text();
       expect(actual).toBe(expected);
-    });
+      });
 
     it(`does not render the list of article attributes from the
       viewArticle response if viewArticle.ok is false`, async () => {
-      graphQLServiceStub.performOperation.mockResolvedValue({
+      crudepediaServiceStub.performOperation.mockResolvedValue({
         data: {
           viewArticle: {
             ok: false,

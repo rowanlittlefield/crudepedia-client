@@ -27,7 +27,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import DashboardLogo from '@/components/DashboardLogo.vue';
 import ArticleListItem from '@/components/ArticleListItem.vue';
 import DashboardArticleAnalytics from '@/components/DashboardArticleAnalytics.vue';
-import graphQLService from '@/services/graphql';
+import crudepediaService from '@/services/crudepedia';
 import DASHBOARD_ARTICLES_QUERY from '@/graphql/query/dashboard-articles.gql';
 
 @Component({
@@ -43,7 +43,7 @@ export default class Dashboard extends Vue {
   private showLogo = !sessionStorage.getItem('hasNavigatedToDashboard');
 
   public async mounted() {
-    const response = await graphQLService.performOperation(DASHBOARD_ARTICLES_QUERY);
+    const response = await crudepediaService.performOperation(DASHBOARD_ARTICLES_QUERY);
     this.articles = response.data.articles;
     this.mostViewedArticles = response.data.mostViewed;
     this.showLogo = false;
