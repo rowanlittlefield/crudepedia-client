@@ -1,13 +1,24 @@
 <template>
   <div class="dashboard">
-    <DashboardLogo />
-    <ul class="dashboard__article-list">
-      <ArticleListItem 
-        v-for="article in articleList"
-        :key="article.id"
-        :article="article"
-      />
-    </ul>
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <dashboard-logo v-if="showLogo"/>
+      <div v-else>
+        <dashboard-article-analytics
+          :article-analytics="mostViewedArticles"
+          class="dashboard__article-analytics" 
+        />
+        <ul class="dashboard__article-list">
+          <article-list-item 
+            v-for="article in articles"
+            :key="article.id"
+            :article="article"
+          />
+        </ul>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -15,21 +26,28 @@
 import { Component, Vue } from 'vue-property-decorator';
 import DashboardLogo from '@/components/DashboardLogo.vue';
 import ArticleListItem from '@/components/ArticleListItem.vue';
+import DashboardArticleAnalytics from '@/components/DashboardArticleAnalytics.vue';
 import crudepediaService from '@/services/crudepedia';
-import ARTICLES_QUERY from '@/graphql/query/articles.gql';
+import DASHBOARD_ARTICLES_QUERY from '@/graphql/query/dashboard-articles.gql';
 
 @Component({
   components: {
     DashboardLogo,
     ArticleListItem,
+    DashboardArticleAnalytics,
   },
 })
 export default class Dashboard extends Vue {
-  private articleList = [];
+  private articles = [];
+  private mostViewedArticles = [];
+  private showLogo = !sessionStorage.getItem('hasNavigatedToDashboard');
 
   public async mounted() {
-    const response = await crudepediaService.performOperation(ARTICLES_QUERY);
-    this.articleList = response.data.articles;
+    const response = await crudepediaService.performOperation(DASHBOARD_ARTICLES_QUERY);
+    this.articles = response.data.articles;
+    this.mostViewedArticles = response.data.mostViewed;
+    this.showLogo = false;
+    sessionStorage.setItem('hasNavigatedToDashboard', 'true');
   }
 }
 </script>
@@ -40,5 +58,18 @@ export default class Dashboard extends Vue {
     display: flex;
     flex-direction: row;
   }
+
+  &__article-analytics {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to  {
+  opacity: 0;
 }
 </style>
