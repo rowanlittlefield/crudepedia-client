@@ -39,7 +39,7 @@ export default class DashboardArticleAnalytics extends Vue {
     left: 10,
   };
 
-  private defaultMostViewed: ReadonlyArray<{ readonly id: number, readonly views: number }> = [
+  private defaultMostViewed: ReadonlyArray< Readonly<{ id: number, views: number }>> = [
     { id: 0, views: 1 },
     { id: 1, views: 0 },
   ];
