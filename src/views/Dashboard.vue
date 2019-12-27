@@ -15,7 +15,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import DashboardLogo from '@/components/DashboardLogo.vue';
 import ArticleListItem from '@/components/ArticleListItem.vue';
-import graphQLService from '@/services/graphql';
+import crudepediaService from '@/services/crudepedia';
 import ARTICLES_QUERY from '@/graphql/query/articles.gql';
 
 @Component({
@@ -28,7 +28,7 @@ export default class Dashboard extends Vue {
   private articleList = [];
 
   public async mounted() {
-    const response = await graphQLService.performOperation(ARTICLES_QUERY);
+    const response = await crudepediaService.performOperation(ARTICLES_QUERY);
     this.articleList = response.data.articles;
   }
 }
