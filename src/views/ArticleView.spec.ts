@@ -10,7 +10,9 @@
 
 // const localVue = createLocalVue();
 
-xit('should work', () => { });
+xit('should work', () => {
+  expect(1).toBe(1);
+});
 
 // describe('ArticleView', () => {
 //   const createResponse = () => ({
