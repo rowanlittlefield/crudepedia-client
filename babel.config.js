@@ -11,6 +11,6 @@ module.exports = {
         "@": "./src",
       }
     }],
-    [path.resolve('./my-babel-graphql-plugin/index.js'), { extensions: '.gql' }],
+    ["import-graphql-string", { trim: true }],
   ],
 }
