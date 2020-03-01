@@ -5,12 +5,11 @@ module.exports = {
     '@vue/app'
   ],
   plugins: [
-    ["module-resolver", {
-      "root": ["./src"],
-      "alias": {
-        "@": "./src",
-      }
+    ["import-graphql-string", {
+      aliases: {
+        '@': './src',
+      },
+      stripIgnoredCharacters: true,
     }],
-    ["import-graphql-string", { trim: true }],
   ],
 }
