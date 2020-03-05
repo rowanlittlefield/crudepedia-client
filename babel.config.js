@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   presets: [
     '@vue/app'
@@ -10,6 +8,7 @@ module.exports = {
         '@': './src',
       },
       stripIgnoredCharacters: true,
+      includeTypeNames: true,
     }],
   ],
 }
